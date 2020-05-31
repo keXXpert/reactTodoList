@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import myCSS from "./TodoItem.module.css";
 import PropTypes from "prop-types";
+import Context from '../../context';
 
 function TodoItem({ id, text, completed, toggleCompleted }) {
-  const classes = []
+  const {removeTodo} = useContext(Context)
+  
+    const classes = []
 
   if (completed) classes.push(myCSS.done)
 
@@ -15,7 +18,7 @@ function TodoItem({ id, text, completed, toggleCompleted }) {
         &nbsp;
         {text}
       </span>
-      <button>&times;</button>
+      <button onClick={() => removeTodo(id)}>&times;</button>
     </li>
   );
 }

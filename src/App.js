@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import myCSS from "./App.module.css";
 import TodoList from "./components/TodoList";
+import Context from "./context";
+import AddTodo from "./components/AddTodo";
 
 function App() {
   let [todos, setTodos] = useState([
@@ -15,16 +17,32 @@ function App() {
         if (todo.id === id) todo.completed = !todo.completed;
         return todo;
       })
-    )
-  }
+    );
+  };
+  const onCreateTodo = (text) => {
+    setTodos(todos.concat([{
+      id: todos.length + 1,
+      text,
+      completed: false
+    }]))
+  };
+
+  const removeTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
   return (
-    <>
+    <Context.Provider value={{ removeTodo }}>
       <div className={myCSS.wrapper}>
         <h1>Todo List</h1>
-        <TodoList todos={todos} toggleCompleted={toggleCompleted} />
+        {todos.length ? (
+          <TodoList todos={todos} toggleCompleted={toggleCompleted} />
+        ) : (
+          "You don't have any todo"
+        )}
+        <AddTodo onCreateTodo={onCreateTodo} />
       </div>
-    </>
+    </Context.Provider>
   );
 }
 

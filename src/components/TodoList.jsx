@@ -2,11 +2,12 @@ import React from 'react'
 import myCSS from './TodoList.module.css'
 import TodoItem from './TodoItem/TodoItem'
 
-export default function TodoList () {
+export default function TodoList ({todos}) {
     return (
         <ul className={myCSS.todoList}>
-            <TodoItem text='1' />
-            <TodoItem text='2' />
+            {todos.map(({id, text, completed}) => {
+                return <TodoItem key={id+text} text={text} completed={completed}/>
+            })}
         </ul>
     )
 }

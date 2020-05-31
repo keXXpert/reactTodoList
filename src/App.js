@@ -1,11 +1,15 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import myCSS from "./App.module.css";
+import TodoList from "./components/TodoList";
 
 function App() {
   return (
-    <div>
-      
-    </div>
+    <>
+      <div className={myCSS.wrapper}>
+        <h1>Hello World!</h1>
+        <TodoList />
+      </div>
+    </>
   );
 }
 

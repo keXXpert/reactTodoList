@@ -6,8 +6,8 @@ import PropTypes from 'prop-types'
 const TodoList = ({todos, toggleCompleted}) => {
     return (
         <ul className={myCSS.todoList}>
-            {todos.map(({id, text, completed}) => {
-                return <TodoItem key={id+text} text={text} completed={completed} 
+            {todos.map(({id, title, completed}) => {
+                return <TodoItem key={id+title} text={title} completed={completed} 
                 id={id} toggleCompleted={toggleCompleted}/>
             })}
         </ul>

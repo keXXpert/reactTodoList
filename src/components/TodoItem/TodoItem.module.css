@@ -14,7 +14,7 @@
 
 .todoItem button {
  background: red;
- border-radius: 50%;
+ border-radius: 6px;
  color: white;
  border: none;
 }

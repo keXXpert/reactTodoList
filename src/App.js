@@ -1,15 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import myCSS from "./App.module.css";
 import TodoList from "./components/TodoList";
 import Context from "./context";
-import AddTodo from "./components/AddTodo";
+
+// import AddTodo from "./components/AddTodo";
+import Loader from "./components/Loader/Loader";
+import Modal from './components/Modal/Modal';
+
+const AddTodo = React.lazy(() => import("./components/AddTodo"));
 
 function App() {
-  let [todos, setTodos] = useState([
-    { id: 1, completed: false, text: "Buy bread" },
-    { id: 2, completed: true, text: "Buy milk" },
-    { id: 3, completed: false, text: "Buy sugar" },
-  ]);
+  let [todos, setTodos] = useState([]);
+  let [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos?_limit=5")
+      .then((response) => response.json())
+      .then((todos) => {
+          setTodos(todos);
+          setLoading(false);
+      });
+    // .then((json) => console.log(json));
+  }, []);
 
   const toggleCompleted = (id) => {
     setTodos(
@@ -19,12 +31,16 @@ function App() {
       })
     );
   };
-  const onCreateTodo = (text) => {
-    setTodos(todos.concat([{
-      id: todos.length + 1,
-      text,
-      completed: false
-    }]))
+  const onCreateTodo = (title) => {
+    setTodos(
+      todos.concat([
+        {
+          id: todos.length + 1,
+          title,
+          completed: false,
+        },
+      ])
+    );
   };
 
   const removeTodo = (id) => {
@@ -35,12 +51,16 @@ function App() {
     <Context.Provider value={{ removeTodo }}>
       <div className={myCSS.wrapper}>
         <h1>Todo List</h1>
+        <Modal />
+        {loading && <Loader />}
         {todos.length ? (
           <TodoList todos={todos} toggleCompleted={toggleCompleted} />
         ) : (
-          "You don't have any todo"
+          loading || "You don't have any todo"
         )}
-        <AddTodo onCreateTodo={onCreateTodo} />
+        <React.Suspense fallback={<p>Loading...</p>}>
+          <AddTodo onCreateTodo={onCreateTodo} />
+        </React.Suspense>
       </div>
     </Context.Provider>
   );

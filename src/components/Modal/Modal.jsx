@@ -10,11 +10,11 @@ export default class Modal extends React.Component {
     render() {
     return (
       <>
-        <button onClick={()=>{this.setState({isOpen:true})}}>Open modal</button>
+        <button className={myCSS.btn}onClick={()=>{this.setState({isOpen:true})}}>Open modal</button>
         {this.state.isOpen && <div className={myCSS.modal}>
           <div className={myCSS.modalBody}>
               <h2>Modal Title</h2>
-              <p>I am awesome modal!</p>
+              <p>I am jus a demo modal!</p>
               <button onClick={()=>{this.setState({isOpen:false})}}>Close modal</button>
           </div>
         </div>}

@@ -2,6 +2,7 @@ Simple ToDo-list Single Page Application (SPA) on React.js, using Hooks (includi
 
 No other libraries are used in this app (no axios, Redux, etc.)
 
+Deployed at: https://kexxpert.online/todo/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
